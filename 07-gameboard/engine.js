@@ -171,7 +171,7 @@ var GameBoard = function() {
 
     // Añade obj a objects
     this.add = function(obj) { 
-	obj.board=this;  // Para que obj pueda referenciar el tablero
+	obj.board=this;  // Para que obj pueda referenciar el tablero. al objeto ademas de añadirlo a objects le paso un puntero del objeto al tablero
 	this.objects.push(obj); 
 	return obj; 
     };
@@ -205,6 +205,8 @@ var GameBoard = function() {
 
     // Iterador que aplica el método funcName a todos los
     // objetos de objects
+    //Iterate si le llamas por ejemplo con draw, lo que hará es recorrerse todos los objetos que hay en el board(tablero), y llamar al draw de esos objetos para que
+    //se vayan pintando todos.
     this.iterate = function(funcName) {
 	// Convertimos en un array args (1..)
 	var args = Array.prototype.slice.call(arguments,1);
@@ -215,7 +217,8 @@ var GameBoard = function() {
 	}
     };
 
-    // Devuelve el primer objeto de objects para el que func es true
+    // Devuelve el primer objeto de objects para el que func es true//Luego lo llamaremos con collide, lo que hara es recorrerse todos los objetos llamando al 
+    //collide de cada objeto para comprobar si hay colision. Si hay colision te devolvera el objeto.
     this.detect = function(func) {
 	for(var i = 0,val=null, len=this.objects.length; i < len; i++) {
 	    if(func.call(this.objects[i])) return this.objects[i];

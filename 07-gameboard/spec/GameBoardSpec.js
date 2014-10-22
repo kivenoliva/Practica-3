@@ -56,3 +56,55 @@
     colisionado con objetos de cierto tipo, no con todos los objetos.
 
 */
+
+
+
+
+describe("Clase GameBoard", function(){
+
+    var canvas, ctx;
+
+    beforeEach(function(){
+	loadFixtures('index.html');
+
+	canvas = $('#game')[0];
+	expect(canvas).toExist();
+
+	ctx = canvas.getContext('2d');
+	expect(ctx).toBeDefined();
+	
+	oldGame = Game;
+	
+	board = new GameBoard();
+    });
+
+    afterEach(function(){
+	Game = oldGame;
+    }); 
+
+    it ("add", function(){
+  
+        
+        board.add(1);
+        expect(board.objects[0]).toEqual(1);
+    });
+
+    it ("remove", function(){
+        
+        board.removed = [];
+        board.remove(1);
+        expect(board.removed[0]).toEqual(1);
+    });
+    
+    /*
+    it ("resetRemoved", function(){
+        
+       board.removed = [1, 2, 3];
+       expect(board.removed.length.toEqual(3);
+       board.resetRemoved();
+       expect(board.removed.length.toEqual(0);
+    });
+    */    
+});
+
+
