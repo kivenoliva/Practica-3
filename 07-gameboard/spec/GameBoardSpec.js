@@ -75,7 +75,8 @@ describe("Clase GameBoard", function(){
 	
 	oldGame = Game;
 	
-	board = new GameBoard();
+	SpriteSheet.load (sprites,function(){});
+	board = new GameBoard();            //inicializo un new GameBoard() y ahora mi tablero esta en board todo el rato.
     });
 
     afterEach(function(){
@@ -83,8 +84,7 @@ describe("Clase GameBoard", function(){
     }); 
 
     it ("add", function(){
-  
-        
+         
         board.add(1);
         expect(board.objects[0]).toEqual(1);
     });
@@ -96,15 +96,120 @@ describe("Clase GameBoard", function(){
         expect(board.removed[0]).toEqual(1);
     });
     
-    /*
+    
     it ("resetRemoved", function(){
         
-       board.removed = [1, 2, 3];
-       expect(board.removed.length.toEqual(3);
+       board.removed = [];
+       board.remove(1);
+       board.remove(2);
+       board.remove(3);
+       expect(board.removed.length).toEqual(3);
        board.resetRemoved();
-       expect(board.removed.length.toEqual(0);
+       expect(board.removed.length).toEqual(0);
     });
-    */    
+    
+    it ("finalizeRemoved", function(){
+        //Meto 2 objetos en objects, uno de esos objetos lo meto tambien en removed (estar en removed es estar marcado ese objeto para luego ser
+        //borrado. luego llamo a finalizeRemoved y el array de removed deberia estar vacio, y el de objects solo deberia tener el primero.
+        
+        board.removed = [];
+        board.add(1);
+        board.add(2);
+        board.add(3);
+        
+        board.remove(board.objects[0]);       // Le meto el numero 1
+        board.finalizeRemoved();
+        expect(board.objects[0]).toEqual(2);  // EL primer objeto que tenga objects debe ser un 2 porque el uno lo ha tenido que borrar
+    });
+    
+    it ("iterate", function(){
+            
+        var dummie = {
+	        draw: function (){}
+	    };
+	    
+	    spyOn(dummie, "draw");
+	    
+	    board.add(dummie);
+	    
+	    board.iterate('draw',ctx);
+	   
+	    expect(dummie.draw).toHaveBeenCalled();
+        	       
+    });
+    
+    it ("draw", function(){
+        
+        spyOn(board, "iterate");// si draw funciona bien, debe llamar a la funcion iterate de GameBoard.Y esta a su vez llama a draw de cada objeto
+                                //como hemos comprobado en el it anterior        
+        board.draw(ctx);
+               
+        expect(board.iterate).toHaveBeenCalled();
+        
+    });
+    
+    it ("step", function(){
+    
+        spyOn(board, "iterate");        
+        board.step(ctx);               
+        expect(board.iterate).toHaveBeenCalled();
+        
+        spyOn(board, "resetRemoved");        
+        board.step(ctx);               
+        expect(board.resetRemoved).toHaveBeenCalled();
+        
+        spyOn(board, "finalizeRemoved");        
+        board.step(ctx);               
+        expect(board.finalizeRemoved).toHaveBeenCalled();
+                        
+    });
+    
+    it ("overlap acertando", function(){
+    
+        Game = {width: 320, height: 480};
+
+	    var miNave = new PlayerShip();
+	    var miNaveDos = new PlayerShip();
+	    
+	    expect(board.overlap(miNave, miNaveDos)).toBe(true);
+
+    });
+    
+    it ("overlap fallando", function(){
+    
+        Game = {width: 320, height: 480};
+
+	    var miNave = new PlayerShip();
+	    
+	    Game = {width: 820, height: 980};
+	    var miNaveDos = new PlayerShip();
+	    
+	    expect(board.overlap(miNave, miNaveDos)).toBe(false);
+
+    });
+    
+    /*
+    it ("collide + step", function(){
+        
+        Game = {width: 320, height: 480};
+	    var miNave_Uno = new PlayerShip();
+	    
+	    Game = {width: 320, height: 480};
+	    var miNave_Dos = new PlayerShip();
+	    
+	    Game = {width: 820, height: 980};
+	    var miNave_Tres = new PlayerShip();
+	    
+	    board.add(miNave_Uno);
+	    board.add(miNave_Dos);
+	    board.add(miNave_Tres);
+	    
+	    expect(board.collide(miNave_Uno).toEqual(miNave_Dos));
+    
+    });
+    
+    */
+        
 });
 
 
