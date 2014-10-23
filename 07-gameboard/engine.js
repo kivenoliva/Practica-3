@@ -13,7 +13,10 @@
 
 // Objeto singleton Game: se guarda una unica instancia del
 // constructor anónimo en el objeto Game
-var Game = new function() {                                                                  
+
+
+var Game = new function() {    
+                                                          
 
     // Inicializa el juego
     this.initialize = function(canvasElementId,sprite_data,callback) {
@@ -207,23 +210,24 @@ var GameBoard = function() {
     // objetos de objects
     //Iterate si le llamas por ejemplo con draw, lo que hará es recorrerse todos los objetos que hay en el board(tablero), y llamar al draw de esos objetos para que
     //se vayan pintando todos.
+    
     this.iterate = function(funcName) {
-	// Convertimos en un array args (1..)
-	var args = Array.prototype.slice.call(arguments,1);
-
-	for(var i=0, len=this.objects.length; i<len;i++) {
-	    var obj = this.objects[i];
-	    obj[funcName].apply(obj,args)
-	}
+    // Convertimos en un array args (1..)
+    var args = Array.prototype.slice.call(arguments,1);
+        _(this.objects).forEach(function (obj) {
+            obj[funcName].apply(obj,args)
+        })
     };
 
     // Devuelve el primer objeto de objects para el que func es true//Luego lo llamaremos con collide, lo que hara es recorrerse todos los objetos llamando al 
     //collide de cada objeto para comprobar si hay colision. Si hay colision te devolvera el objeto.
     this.detect = function(func) {
-	for(var i = 0,val=null, len=this.objects.length; i < len; i++) {
-	    if(func.call(this.objects[i])) return this.objects[i];
-	}
-	return false;
+    var encontrado = _(this.objects).find(function (obj) { return func.call(obj)})
+    if (encontrado){
+      return encontrado
+    }else{
+        return false;
+    }
     };
 
     // Cuando Game.loop() llame a step(), hay que llamar al método

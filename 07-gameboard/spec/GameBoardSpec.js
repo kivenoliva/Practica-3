@@ -75,12 +75,12 @@ describe("Clase GameBoard", function(){
 	
 	oldGame = Game;
 	
-	SpriteSheet.load (sprites,function(){});
+	
 	board = new GameBoard();            //inicializo un new GameBoard() y ahora mi tablero esta en board todo el rato.
     });
 
     afterEach(function(){
-	Game = oldGame;
+	    Game = oldGame;
     }); 
 
     it ("add", function(){
@@ -165,6 +165,7 @@ describe("Clase GameBoard", function(){
     });
     
     it ("overlap acertando", function(){
+        SpriteSheet.load (sprites,function(){});
     
         Game = {width: 320, height: 480};
 
@@ -176,6 +177,7 @@ describe("Clase GameBoard", function(){
     });
     
     it ("overlap fallando", function(){
+        SpriteSheet.load (sprites,function(){});
     
         Game = {width: 320, height: 480};
 
