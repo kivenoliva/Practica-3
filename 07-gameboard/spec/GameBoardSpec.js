@@ -125,16 +125,16 @@ describe("Clase GameBoard", function(){
     it ("iterate", function(){
             
         var dummie = {
-	        draw: function (){}
-	    };
-	    
-	    spyOn(dummie, "draw");
-	    
-	    board.add(dummie);
-	    
-	    board.iterate('draw',ctx);
-	   
-	    expect(dummie.draw).toHaveBeenCalled();
+            draw: function (){}
+        };
+
+        spyOn(dummie, "draw");
+
+        board.add(dummie);
+
+        board.iterate('draw',ctx);
+
+        expect(dummie.draw).toHaveBeenCalled();
         	       
     });
     
@@ -168,10 +168,10 @@ describe("Clase GameBoard", function(){
     
         Game = {width: 320, height: 480};
 
-	    var miNave = new PlayerShip();
-	    var miNaveDos = new PlayerShip();
-	    
-	    expect(board.overlap(miNave, miNaveDos)).toBe(true);
+        var miNave = new PlayerShip();
+        var miNaveDos = new PlayerShip();
+
+        expect(board.overlap(miNave, miNaveDos)).toBe(true);
 
     });
     
@@ -179,36 +179,68 @@ describe("Clase GameBoard", function(){
     
         Game = {width: 320, height: 480};
 
-	    var miNave = new PlayerShip();
-	    
-	    Game = {width: 820, height: 980};
-	    var miNaveDos = new PlayerShip();
-	    
-	    expect(board.overlap(miNave, miNaveDos)).toBe(false);
+        var miNave = new PlayerShip();
+
+        Game = {width: 820, height: 980};
+        var miNaveDos = new PlayerShip();
+
+        expect(board.overlap(miNave, miNaveDos)).toBe(false);
 
     });
     
-    /*
-    it ("collide + step", function(){
-        
-        Game = {width: 320, height: 480};
-	    var miNave_Uno = new PlayerShip();
-	    
-	    Game = {width: 320, height: 480};
-	    var miNave_Dos = new PlayerShip();
-	    
-	    Game = {width: 820, height: 980};
-	    var miNave_Tres = new PlayerShip();
-	    
-	    board.add(miNave_Uno);
-	    board.add(miNave_Dos);
-	    board.add(miNave_Tres);
-	    
-	    expect(board.collide(miNave_Uno).toEqual(miNave_Dos));
     
+    it ("collide", function(){
+        
+        var dummie = {  //objeto dummie vacio de prueba
+        };
+        
+        spyOn(board, "detect");
+        board.collide(dummie);
+        expect(board.detect).toHaveBeenCalled();                //compruebo que collide funciona bien y llama a detect
+        
+        
+    });
+        
+    it ("detect no encuentra ninguno", function(){
+    
+        // Primero pruebo para ver si no se cumple la funcion con ningun objeto ver que devuelve false.
+        var dummie = {  //objeto dummie vacio de prueba
+        };
+        
+        funcDummie = function(o){         //funcion dummie para llamar luego a detect con ella.  
+            return false;
+        }
+        
+        
+        board.add(dummie);
+        
+        var devuelto = board.detect(funcDummie);
+        expect(devuelto).toEqual(false);
+        
+        
+                   
     });
     
-    */
+    it ("detect encuentra objeto que devolver", function(){
+    
+        
+        var dummie = {
+            
+        };
+        
+        funcDummie = function(o){         //funcion dummie para llamar luego a detect con ella.  
+            return true;
+        }
+        
+        
+        board.add(dummie);
+        
+        var devuelto = board.detect(funcDummie);
+        expect(devuelto).toEqual(dummie);
+                                  
+    });
+    
+    
         
 });
 
