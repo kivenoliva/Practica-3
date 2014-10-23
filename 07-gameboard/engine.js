@@ -223,11 +223,11 @@ var GameBoard = function() {
     //collide de cada objeto para comprobar si hay colision. Si hay colision te devolvera el objeto.
     this.detect = function(func) {
     var encontrado = _(this.objects).find(function (obj) { return func.call(obj)})
-    if (encontrado){
-      return encontrado
-    }else{
-        return false;
-    }
+        if (encontrado){
+          return encontrado
+        }else{
+            return false;
+        }
     };
 
     // Cuando Game.loop() llame a step(), hay que llamar al método
