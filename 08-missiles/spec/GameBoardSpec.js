@@ -65,18 +65,18 @@ describe("Clase GameBoard", function(){
     var canvas, ctx;
 
     beforeEach(function(){
-	loadFixtures('index.html');
+	    loadFixtures('index.html');
 
-	canvas = $('#game')[0];
-	expect(canvas).toExist();
+	    canvas = $('#game')[0];
+	    expect(canvas).toExist();
 
-	ctx = canvas.getContext('2d');
-	expect(ctx).toBeDefined();
+	    ctx = canvas.getContext('2d');
+	    expect(ctx).toBeDefined();
 	
-	oldGame = Game;
+	    oldGame = Game;
 	
 	
-	board = new GameBoard();            //inicializo un new GameBoard() y ahora mi tablero esta en board todo el rato.
+	    board = new GameBoard();            //inicializo un new GameBoard() y ahora mi tablero esta en board todo el rato.
     });
 
     afterEach(function(){
