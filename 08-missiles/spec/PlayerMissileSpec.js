@@ -41,8 +41,9 @@ describe("Prueba de funcion PlayerMissile", function(){
 	    ctx = canvas.getContext('2d');
 	    expect(ctx).toBeDefined();
 	
+	    SpriteSheet.load (sprites,function(){});
 	    oldGame = Game;
-	
+	   	
     });
 
     afterEach(function(){
@@ -53,7 +54,7 @@ describe("Prueba de funcion PlayerMissile", function(){
     it ("step", function(){
         
         // Pruebo que haga bien el valor de y, debe darme (20), calculado yo a mano
-        SpriteSheet.load (sprites,function(){});    
+            
     
         misil = new PlayerMissile(10,100);
         
@@ -78,25 +79,24 @@ describe("Prueba de funcion PlayerMissile", function(){
            
     });
     
-    /*
+    
     it ("draw", function(){
     
-        SpriteSheet = {
-            draw : function () {},
-            map : {missile: { sx: 0, sy: 30, w: 2, h: 10, frames: 1 }}
-        }
-        
         misil = new PlayerMissile(10,100);
         
+        SpriteSheet = {
+            draw: function(ctx, name, x, y) {},
+        }
+             
         spyOn(SpriteSheet, "draw");
         misil.draw(ctx)
         expect(SpriteSheet.draw).toHaveBeenCalled();
         expect(SpriteSheet.draw.calls[0].args[0]).toEqual(ctx);
         expect(SpriteSheet.draw.calls[0].args[1]).toEqual("missile");
-        expect(SpriteSheet.draw.calls[0].args[2]).toEqual(10);
-        expect(SpriteSheet.draw.calls[0].args[3]).toEqual(100);
-   
+        expect(SpriteSheet.draw.calls[0].args[2]).toEqual(misil.x);
+        expect(SpriteSheet.draw.calls[0].args[3]).toEqual(misil.y);
+        
     });
     
-    */
+    
 });
