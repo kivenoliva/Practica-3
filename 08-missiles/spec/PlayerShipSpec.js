@@ -137,11 +137,48 @@ describe("Clase PlayerShip", function(){
 
     });
     
-    /*
-    it("step con la tecla del espacio pulsada(ejer 6)", function(){
-
     
-    */
+    it("step con la tecla del espacio pulsada(ejer 6)", function(){
+    
+        SpriteSheet = {    
+            map : {missile: { sx: 0, sy: 30, w: 2, h: 10, frames: 1 } ,           
+                   ship: { sx: 0, sy: 0, w: 37, h: 42, frames: 1 }}
+        }
+
+        Game = {width: 320, height: 480, keys: {'fire': false}};
+        
+        miNave = new PlayerShip();
+        
+        var boardDummie = function () { //Game board en el que estaria el misil.
+            this.llamado = false;
+            this.add = function () {this.llamado = true}
+        }
+        
+  
+        //Como hemos inicializado que no esta pulsada, no debe disparar, por tanto el board no llama a add para añadir al tablero los disparos
+        miNave.board = new boardDummie();
+        miNave.step(1);
+        expect(miNave.board.llamado).toBe(false);
+        
+        //Le hacemos que que se haya pulsado el espacio, y ahora add si que debe ser llamado, en concreto creo que 2, porque hay dos disparos.
+        miNave.board = new boardDummie();
+        Game.keys['fire'] = true;
+        miNave.step(1);
+        expect(miNave.board.llamado).toBe(true);
+        
+        //Si se suelta el espacio no debe dispara
+        miNave.board = new boardDummie();
+        Game.keys['fire'] = false;
+        miNave.step(1);
+        expect(miNave.board.llamado).toBe(false);
+        
+        //Y cuando lo volvemos a pulsar vuelve a disparar.
+        miNave.board = new boardDummie();
+        Game.keys['fire'] = true;
+        miNave.step(1);
+        expect(miNave.board.llamado).toBe(true);
+            
+    });
 
 });
 
