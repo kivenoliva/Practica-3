@@ -165,26 +165,31 @@ describe("Clase GameBoard", function(){
     });
     
     it ("overlap acertando", function(){
-        SpriteSheet.load (sprites,function(){});
     
-        Game = {width: 320, height: 480};
+        var naveDummie = function (x,y,h,w) {
+            this.x = x
+            this.y = y            
+            this.w = w
+            this.h = h
+        }
 
-        var miNave = new PlayerShip();
-        var miNaveDos = new PlayerShip();
+        var miNave = new naveDummie(10,20,320,480);
+        var miNaveDos = new naveDummie(10,20,320,480);
 
         expect(board.overlap(miNave, miNaveDos)).toBe(true);
-
+        
     });
     
     it ("overlap fallando", function(){
-        SpriteSheet.load (sprites,function(){});
-    
-        Game = {width: 320, height: 480};
+        var naveDummie = function (x,y,h,w) {
+            this.x = x
+            this.y = y            
+            this.w = w
+            this.h = h
+        }
 
-        var miNave = new PlayerShip();
-
-        Game = {width: 820, height: 980};
-        var miNaveDos = new PlayerShip();
+        var miNave = new naveDummie(10,20,30,40);
+        var miNaveDos = new naveDummie(100,200,300,400);
 
         expect(board.overlap(miNave, miNaveDos)).toBe(false);
 

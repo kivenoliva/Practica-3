@@ -41,7 +41,7 @@ describe("Prueba de funcion PlayerMissile", function(){
 	    ctx = canvas.getContext('2d');
 	    expect(ctx).toBeDefined();
 	
-	    SpriteSheet.load (sprites,function(){});
+	    //SpriteSheet.load (sprites,function(){});    MAL la dejo comentada para saber que la quite y acordarme 
 	    oldGame = Game;
 	   	
     });
@@ -54,7 +54,13 @@ describe("Prueba de funcion PlayerMissile", function(){
     it ("step", function(){
         
         // Pruebo que haga bien el valor de y, debe darme (20), calculado yo a mano
-            
+        SpriteSheet = {     
+            draw : function () {},
+            map : {missile: { sx: 0, sy: 30, w: 2, h: 10, frames: 1 }}
+        }
+        
+        //al hacer el problema 6 del protocolo 08 y tocar PlayerShipSpec.js me da error la linea que tengo comentada en la 44 y para no tener
+        //que usar eso me hago este SpriteSheet. Me ha costado entenderlo.
     
         misil = new PlayerMissile(10,100);
         
@@ -81,12 +87,13 @@ describe("Prueba de funcion PlayerMissile", function(){
     
     
     it ("draw", function(){
-    
-        misil = new PlayerMissile(10,100);
         
         SpriteSheet = {
-            draw: function(ctx, name, x, y) {},
+            draw: function(ctx, name, x, y) {},        
+            map : {missile: { sx: 0, sy: 30, w: 2, h: 10, frames: 1 }}    
         }
+        
+        misil = new PlayerMissile(10,100);
              
         spyOn(SpriteSheet, "draw");
         misil.draw(ctx)

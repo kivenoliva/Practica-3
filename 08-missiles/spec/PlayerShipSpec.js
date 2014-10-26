@@ -136,6 +136,12 @@ describe("Clase PlayerShip", function(){
 	expect(miNave.x).toEqual(Game.width - 37);
 
     });
+    
+    /*
+    it("step con la tecla del espacio pulsada(ejer 6)", function(){
+
+    
+    */
 
 });
 
